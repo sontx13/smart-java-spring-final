@@ -2,8 +2,6 @@
 FROM gradle:8.7-jdk17 AS build
 COPY --chown=gradle:gradle . /project/smart
 WORKDIR /project/smart
-
-#skip task: test
 RUN gradle clean build -x test --no-daemon
 
 # Stage 2: Run the application
