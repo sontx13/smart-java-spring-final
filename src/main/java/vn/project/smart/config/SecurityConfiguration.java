@@ -79,7 +79,8 @@ public class SecurityConfiguration {
 
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults())
-                        .authenticationEntryPoint(customAuthenticationEntryPoint))
+                // .authenticationEntryPoint(customAuthenticationEntryPoint)
+                )
                 // .exceptionHandling(
                 // exceptions -> exceptions
                 // .authenticationEntryPoint(customAuthenticationEntryPoint) // 401
