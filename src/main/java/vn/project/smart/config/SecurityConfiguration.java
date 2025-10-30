@@ -67,6 +67,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/skills/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/exams/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/qas/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/articles/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/configs/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/banners/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/news/**").permitAll()
@@ -76,6 +77,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/zmaus/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/zmaus").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/qas").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/articles").permitAll()
 
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults())
