@@ -104,6 +104,7 @@ public class SyncArticleService {
             HttpServletRequest request = attr.getRequest();
 
             String isNew = request.getParameter("is_new");
+            String titleCut = request.getParameter("title_cut");
             String appId = request.getParameter("app.id");
             String cateId = request.getParameter("category.id");
 
@@ -112,6 +113,13 @@ public class SyncArticleService {
                 // Ép về string trim để tránh khoảng trắng hoặc ký tự khác
                 String isNewStr = isNew.trim().replace("'", "");
                 filterSpec = filterSpec.and((root, query, cb) -> cb.equal(root.get("is_new"), isNewStr));
+            }
+
+            // 🔹 Nếu có title_cut (tìm kiếm gần đúng)
+            if (titleCut != null && !titleCut.isEmpty()) {
+                String titleKeyword = titleCut.trim().replace("'", "");
+                filterSpec = filterSpec.and((root, query, cb) -> cb.like(cb.lower(root.get("title_cut")),
+                        "%" + titleKeyword.toLowerCase() + "%"));
             }
 
             // 🔹 Nếu có app.id

@@ -6,7 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import jakarta.servlet.http.HttpServletRequest;
 import vn.project.smart.domain.App;
 import vn.project.smart.domain.AppQA;
 import vn.project.smart.domain.response.ResultPaginationDTO;
@@ -109,21 +112,54 @@ public class AppQAService {
     }
 
     public ResultPaginationDTO fetchAll(Specification<AppQA> spec, Pageable pageable) {
-        Page<AppQA> pageUser = this.qaRepository.findAll(spec, pageable);
 
+        Specification<AppQA> filterSpec = spec;
+
+        // 🔸 Lấy param từ request (nếu có)
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attr != null) {
+            HttpServletRequest request = attr.getRequest();
+
+            String activeParam = request.getParameter("active");
+            String contentQ = request.getParameter("content_q");
+            String appId = request.getParameter("app.id");
+
+            // 🔹 Nếu có active (boolean)
+            if (activeParam != null) {
+                boolean activeValue = Boolean.parseBoolean(activeParam.trim());
+                filterSpec = filterSpec.and((root, query, cb) -> cb.equal(root.get("active"), activeValue));
+            }
+
+            // 🔹 Nếu có content_q (tìm kiếm gần đúng)
+            if (contentQ != null && !contentQ.trim().isEmpty()) {
+                String keyword = "%" + contentQ.trim() + "%";
+                filterSpec = filterSpec
+                        .and((root, query, cb) -> cb.like(cb.lower(root.get("content_q")), keyword.toLowerCase()));
+            }
+
+            // 🔹 Nếu có app.id
+            if (appId != null) {
+                filterSpec = filterSpec
+                        .and((root, query, cb) -> cb.equal(root.get("app").get("id"), Long.valueOf(appId)));
+            }
+        }
+
+        // ✅ Truy vấn repository với filterSpec
+        Page<AppQA> pageUser = this.qaRepository.findAll(filterSpec, pageable);
+
+        // 🔹 Chuẩn bị dữ liệu trả về
         ResultPaginationDTO rs = new ResultPaginationDTO();
         ResultPaginationDTO.Meta mt = new ResultPaginationDTO.Meta();
 
         mt.setPage(pageable.getPageNumber() + 1);
         mt.setPageSize(pageable.getPageSize());
-
         mt.setPages(pageUser.getTotalPages());
         mt.setTotal(pageUser.getTotalElements());
 
         rs.setMeta(mt);
-
         rs.setResult(pageUser.getContent());
 
         return rs;
     }
+
 }
