@@ -57,8 +57,8 @@ public class SyncArticleService {
             }
         }
 
-        if (j.getId_article() != null) {
-            SyncArticle articleDB = this.articleRepository.findByIdArticle(j.getId_article());
+        if (j.getIdArticle() != null) {
+            SyncArticle articleDB = this.articleRepository.findByIdArticle(j.getIdArticle());
             if (articleDB != null) {
                 this.articleRepository.deleteById(articleDB.getId());
             }
@@ -70,28 +70,32 @@ public class SyncArticleService {
             ResCreateSyncArticleDTO dto = new ResCreateSyncArticleDTO();
 
             dto.setId(currentSyncArticle.getId());
-            dto.setId_article(currentSyncArticle.getId_article());
+            dto.setIdArticle(currentSyncArticle.getIdArticle());
             dto.setTitle(currentSyncArticle.getTitle());
-            dto.setTitle_cut(currentSyncArticle.getTitle_cut());
-            dto.setImage_url(currentSyncArticle.getImage_url());
+            dto.setTitleCut(currentSyncArticle.getTitleCut());
+            dto.setImageUrl(currentSyncArticle.getImageUrl());
             dto.setSummary(currentSyncArticle.getSummary());
             dto.setContent(currentSyncArticle.getContent());
-            dto.setCreated_date(currentSyncArticle.getCreated_date());
-            dto.setUrl_detail(currentSyncArticle.getUrl_detail());
+            dto.setCreatedDate(currentSyncArticle.getCreatedDate());
+            dto.setUrlDetail(currentSyncArticle.getUrlDetail());
             dto.setSource(currentSyncArticle.getSource());
             dto.setAuthor(currentSyncArticle.getAuthor());
-            dto.setView_count(currentSyncArticle.getView_count());
-            dto.setCate_name(currentSyncArticle.getCate_name());
-            dto.setCate_id(currentSyncArticle.getCate_id());
-            dto.setIs_new(currentSyncArticle.getIs_new());
-            dto.setStruc_id(currentSyncArticle.getStruc_id());
-            dto.setOther_props(currentSyncArticle.getOther_props());
-            dto.setTime_sync(currentSyncArticle.getTime_sync());
+            dto.setViewCount(currentSyncArticle.getViewCount());
+            dto.setCateName(currentSyncArticle.getCateName());
+            dto.setCateId(currentSyncArticle.getCateId());
+            dto.setIsNew(currentSyncArticle.getIsNew());
+            dto.setStrucId(currentSyncArticle.getStrucId());
+            dto.setOtherProps(currentSyncArticle.getOtherProps());
+            dto.setTimeSync(currentSyncArticle.getTimeSync());
 
             return dto;
         } else {
             return null;
         }
+    }
+
+    public void delete(long id) {
+        this.articleRepository.deleteById(id);
     }
 
     public ResultPaginationDTO fetchAll(Specification<SyncArticle> spec, Pageable pageable) {

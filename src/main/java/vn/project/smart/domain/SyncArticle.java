@@ -21,39 +21,39 @@ public class SyncArticle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String id_article;
+    private String idArticle;
 
     private String title;
 
-    private String title_cut;
+    private String titleCut;
 
-    private String image_url;
+    private String imageUrl;
 
     private String summary;
 
     private String content;
 
-    private String created_date;
+    private String createdDate;
 
-    private String url_detail;
+    private String urlDetail;
 
     private String source;
 
     private String author;
 
-    private int view_count;
+    private int viewCount;
 
-    private String cate_name;
+    private String cateName;
 
-    private long cate_id;
+    private long cateId;
 
-    private String is_new;
+    private String isNew;
 
-    private String struc_id;
+    private String strucId;
 
-    private String other_props;
+    private String otherProps;
 
-    private Instant time_sync;
+    private Instant timeSync;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -65,7 +65,7 @@ public class SyncArticle {
 
     @PrePersist
     public void handleBeforeCreate() {
-        this.time_sync = Instant.now();
+        this.timeSync = Instant.now();
     }
 
 }

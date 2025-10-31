@@ -75,6 +75,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/infors/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/hotlines/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/zmaus/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/proxy/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/zmaus").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/qas").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/articles").permitAll()

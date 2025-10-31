@@ -12,7 +12,7 @@ import vn.project.smart.domain.SyncArticle;
 public interface SyncArticleRepository extends JpaRepository<SyncArticle, Long>,
         JpaSpecificationExecutor<SyncArticle> {
 
-    @Query("SELECT s FROM SyncArticle s WHERE s.id_article = :id_article")
-    SyncArticle findByIdArticle(@Param("id_article") String id_article);
+    @Query("SELECT s FROM SyncArticle s WHERE s.idArticle = :idArticle")
+    SyncArticle findByIdArticle(@Param("idArticle") String idArticle);
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
+import vn.project.smart.domain.AppNew;
 import vn.project.smart.domain.SyncArticle;
 import vn.project.smart.domain.response.ResultPaginationDTO;
 import vn.project.smart.domain.response.ResCreateSyncArticleDTO;
@@ -48,6 +49,17 @@ public class SyncArticleController {
         }
 
         return ResponseEntity.ok().body(currentSyncArticle.get());
+    }
+
+    @DeleteMapping("/articles/{id}")
+    @ApiMessage("Delete a article by id")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id) throws IdInvalidException {
+        Optional<SyncArticle> currentSyncArticle = this.articleService.fetchSyncArticleById(id);
+        if (!currentSyncArticle.isPresent()) {
+            throw new IdInvalidException("AppNew not found");
+        }
+        this.articleService.delete(id);
+        return ResponseEntity.ok().body(null);
     }
 
     @GetMapping("/articles")
