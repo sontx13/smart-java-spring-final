@@ -52,14 +52,14 @@ public class AppQAService {
         // convert response
         ResCreateAppQADTO dto = new ResCreateAppQADTO();
         dto.setId(currentAppQA.getId());
-        dto.setName_q(currentAppQA.getName_q());
-        dto.setName_a(currentAppQA.getName_a());
-        dto.setTime_q(currentAppQA.getTime_q());
-        dto.setTime_a(currentAppQA.getTime_a());
-        dto.setEmail_q(currentAppQA.getEmail_q());
-        dto.setPhone_q(currentAppQA.getPhone_q());
-        dto.setContent_a(currentAppQA.getContent_a());
-        dto.setContent_q(currentAppQA.getContent_q());
+        dto.setNameQ(currentAppQA.getNameQ());
+        dto.setNameA(currentAppQA.getNameA());
+        dto.setTimeQ(currentAppQA.getTimeQ());
+        dto.setTimeA(currentAppQA.getTimeA());
+        dto.setEmailQ(currentAppQA.getEmailQ());
+        dto.setPhoneQ(currentAppQA.getPhoneQ());
+        dto.setContentA(currentAppQA.getContentA());
+        dto.setContentQ(currentAppQA.getContentQ());
         dto.setActive(currentAppQA.isActive());
         dto.setCreatedAt(currentAppQA.getCreatedAt());
         dto.setCreatedBy(currentAppQA.getCreatedBy());
@@ -78,14 +78,12 @@ public class AppQAService {
         }
 
         // update correct info
-        qaInDB.setName_q(j.getName_q());
-        qaInDB.setName_a(j.getName_a());
-        qaInDB.setTime_q(j.getTime_q());
-        qaInDB.setTime_a(j.getTime_a());
-        qaInDB.setEmail_q(j.getEmail_q());
-        qaInDB.setPhone_q(j.getPhone_q());
-        qaInDB.setContent_a(j.getContent_a());
-        qaInDB.setContent_q(j.getContent_q());
+        qaInDB.setNameQ(j.getNameQ());
+        qaInDB.setNameA(j.getNameA());
+        qaInDB.setEmailQ(j.getEmailQ());
+        qaInDB.setPhoneQ(j.getPhoneQ());
+        qaInDB.setContentA(j.getContentA());
+        qaInDB.setContentQ(j.getContentQ());
 
         // update qa
         AppQA currentAppQA = this.qaRepository.save(qaInDB);
@@ -93,15 +91,15 @@ public class AppQAService {
         // convert response
         ResUpdateAppQADTO dto = new ResUpdateAppQADTO();
         dto.setId(currentAppQA.getId());
-        dto.setName_q(currentAppQA.getName_q());
-        dto.setName_a(currentAppQA.getName_a());
-        dto.setTime_q(currentAppQA.getTime_q());
-        dto.setTime_a(currentAppQA.getTime_a());
-        dto.setEmail_q(currentAppQA.getEmail_q());
-        dto.setPhone_q(currentAppQA.getPhone_q());
+        dto.setNameQ(currentAppQA.getNameQ());
+        dto.setNameA(currentAppQA.getNameA());
+        dto.setTimeQ(currentAppQA.getTimeQ());
+        dto.setTimeA(currentAppQA.getTimeA());
+        dto.setEmailQ(currentAppQA.getEmailQ());
+        dto.setPhoneQ(currentAppQA.getPhoneQ());
         dto.setActive(currentAppQA.isActive());
-        dto.setContent_a(currentAppQA.getContent_a());
-        dto.setContent_q(currentAppQA.getContent_q());
+        dto.setContentA(currentAppQA.getContentA());
+        dto.setContentQ(currentAppQA.getContentQ());
         dto.setUpdatedAt(currentAppQA.getUpdatedAt());
         dto.setUpdatedBy(currentAppQA.getUpdatedBy());
         return dto;
@@ -121,7 +119,7 @@ public class AppQAService {
             HttpServletRequest request = attr.getRequest();
 
             String activeParam = request.getParameter("active");
-            String contentQ = request.getParameter("content_q");
+            String contentQ = request.getParameter("contentQ");
             String appId = request.getParameter("app.id");
 
             // 🔹 Nếu có active (boolean)
@@ -130,11 +128,11 @@ public class AppQAService {
                 filterSpec = filterSpec.and((root, query, cb) -> cb.equal(root.get("active"), activeValue));
             }
 
-            // 🔹 Nếu có content_q (tìm kiếm gần đúng)
+            // 🔹 Nếu có contentQ (tìm kiếm gần đúng)
             if (contentQ != null && !contentQ.trim().isEmpty()) {
                 String keyword = "%" + contentQ.trim() + "%";
                 filterSpec = filterSpec
-                        .and((root, query, cb) -> cb.like(cb.lower(root.get("content_q")), keyword.toLowerCase()));
+                        .and((root, query, cb) -> cb.like(cb.lower(root.get("contentQ")), keyword.toLowerCase()));
             }
 
             // 🔹 Nếu có app.id

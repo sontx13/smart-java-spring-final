@@ -23,21 +23,21 @@ public class AppQA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name_q;
+    private String nameQ;
 
-    private String email_q;
+    private String emailQ;
 
-    private String phone_q;
+    private String phoneQ;
 
-    private String content_q;
+    private String contentQ;
 
-    private Instant time_q;
+    private Instant timeQ;
 
-    private String name_a;
+    private String nameA;
 
-    private Instant time_a;
+    private Instant timeA;
 
-    private String content_a;
+    private String contentA;
 
     private boolean active;
 
@@ -60,6 +60,8 @@ public class AppQA {
                 : "";
 
         this.createdAt = Instant.now();
+
+        this.timeQ = Instant.now();
     }
 
     @PreUpdate
@@ -69,5 +71,7 @@ public class AppQA {
                 : "";
 
         this.updatedAt = Instant.now();
+
+        this.timeA = Instant.now();
     }
 }

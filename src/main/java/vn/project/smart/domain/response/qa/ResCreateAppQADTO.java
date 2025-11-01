@@ -8,14 +8,14 @@ import lombok.Setter;
 @Setter
 public class ResCreateAppQADTO {
     private long id;
-    private String name_q;
-    private String email_q;
-    private String phone_q;
-    private String content_q;
-    private Instant time_q;
-    private String name_a;
-    private Instant time_a;
-    private String content_a;
+    private String nameQ;
+    private String emailQ;
+    private String phoneQ;
+    private String contentQ;
+    private Instant timeQ;
+    private String nameA;
+    private Instant timeA;
+    private String contentA;
     private boolean active;
 
     private Instant createdAt;
