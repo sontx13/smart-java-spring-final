@@ -33,7 +33,7 @@ public class SyncArticle {
 
     private String content;
 
-    private String createdDate;
+    private Instant createdDate;
 
     private String urlDetail;
 
